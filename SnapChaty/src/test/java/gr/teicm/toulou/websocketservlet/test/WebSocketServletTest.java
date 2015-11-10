@@ -21,19 +21,19 @@ public class WebSocketServletTest
 		
 	}
 	
-	@Test
-	public void connectionEstablishTest()
-	{
-		webSocketClientMock = new WebSocketClientMock();
-		
-		String sessionId = webSocketClientMock.createConnection();
-		
-		Boolean sessionClosed = webSocketClientMock.closeConnection();
-		
-		assertNotNull( sessionId );
-		assertTrue( sessionClosed );
-	}
-	
+//	@Test
+//	public void connectionEstablishTest()
+//	{
+//		webSocketClientMock = new WebSocketClientMock();
+//		
+//		String sessionId = webSocketClientMock.createConnection();
+//		
+//		Boolean sessionClosed = webSocketClientMock.closeConnection();
+//		
+//		assertNotNull( sessionId );
+//		assertTrue( sessionClosed );
+//	}
+//	
 	@Test
 	public void servletReceiveMessageTest()
 	{

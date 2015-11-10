@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.snapchaty;
+package gr.teicm.toulou;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
@@ -30,10 +30,10 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         
-        resources.add(com.mycompany.snapchaty.LocationResource.class);
-        resources.add(com.mycompany.snapchaty.OnlinenowResource.class);
-        resources.add(com.mycompany.snapchaty.SigninResource.class);
-        resources.add(com.mycompany.snapchaty.SignupResource.class);
+        resources.add(gr.teicm.toulou.LocationResource.class);
+        resources.add(gr.teicm.toulou.OnlinenowResource.class);
+        resources.add(gr.teicm.toulou.SigninResource.class);
+        resources.add(gr.teicm.toulou.SignupResource.class);
        
     }
     

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.snapchaty;
+package gr.teicm.toulou.websocketservlet;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -29,15 +29,9 @@ public class WebSocketServlet
 	public void onOpen( Session session )
 	{
 		System.out.println( session.getId() + " has opened a connection!" );
-		try
-		{
-			connectedClients.add( session );
-			session.getBasicRemote().sendText( "Connection Established" );
-		}
-		catch(IOException ex)
-		{
-			ex.printStackTrace();
-		}
+		
+		connectedClients.add( session );
+		session.getAsyncRemote().sendText( "Server says: Connection Established" );
 		
 		
 	}
@@ -47,17 +41,19 @@ public class WebSocketServlet
 	{
 		System.out.println( "Message from " + session.getId() + ": " + message );
 
-		try
-		{
 			for(Session client : connectedClients)
 			{
-				client.getBasicRemote().sendText( message );
+				try
+				{
+					client.getBasicRemote().sendText( message );
+				}
+				catch(IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
-		}
-		catch(IOException ex)
-		{
-			
-		}
+
+
 	}
 
 	@OnClose
@@ -65,6 +61,9 @@ public class WebSocketServlet
 	{
 		if(connectedClients.remove( session ))
 		{
+			System.out.println( session.getId() + ": has closed the connection!\n"
+					+ connectedClients.size() + "Clients online" );
+			
 			return Response.ok().build();
 		}
 		else

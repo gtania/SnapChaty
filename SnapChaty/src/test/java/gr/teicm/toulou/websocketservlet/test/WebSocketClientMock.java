@@ -35,7 +35,7 @@ public class WebSocketClientMock
 			WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 			
 			URI WebSocketServletUri = new URI( "ws://localhost:8080/SnapChaty/createSesion" );
-			container.connectToServer( this, WebSocketServletUri );
+			this.session = container.connectToServer( WebSocketClientMock.class, WebSocketServletUri );
 			
 			return this.session.getId();
 		}
@@ -57,8 +57,6 @@ public class WebSocketClientMock
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
-			
 			return false;
 		}
 	}
@@ -74,7 +72,7 @@ public class WebSocketClientMock
 	@OnClose
 	public String onClose( Session session, CloseReason reason )
 	{
-		System.out.println( "H sindesh eklise!" );
+		System.out.println( "H sindesh eklise!" + reason.getReasonPhrase() );
 		this.session = null;
 		
 		return session.getId();
@@ -82,7 +80,7 @@ public class WebSocketClientMock
 	}
 
 	@OnMessage
-	public String onMessage( String message )
+	public String onMessage( String message, Session session )
 	{
 		System.out.println( message );
 		
@@ -99,8 +97,6 @@ public class WebSocketClientMock
 		}
 		catch(IOException e)
 		{
-			e.printStackTrace();
-		
 			return false;
 		}
 		

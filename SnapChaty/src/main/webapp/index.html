@@ -5,88 +5,121 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'></script>
-        <script src='RestClient.js'></script>
-        <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      #form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      #messageinput { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
-     
-      button { width: 15%; background: rgb(130, 224, 255); border: none; padding: 10px;
-               position: fixed; bottom: 0 }
-      #Send{left:83%;bottm:2%}
-      #Close{left:83%;bottom:10%}
-      #Open{left:83%;bottom:20%}
-      
-      
-    </style>
-    </head>
-    <body>
-   <div id="form">
-       <input type="text" id="messageinput"/>
-    
-</div>
-<div id="buttons">
-    <button type="button" id="Open" onclick="openSocket();">Open</button>
-    <button type="button" id="Close" onclick="closeSocket();">Close</button>
-    <button type="button" id="Send" onclick="send();">Send</button>
-</div>
-<!-- Server responses get written here -->
-<div id="messages"></div>
+<head>
+<title></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script
+	src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js'></script>
+<script
+	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
+<script
+	src='http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js'></script>
+<script src='RestClient.js'></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
-<!-- Script to utilise the WebSocket -->
-<script type="text/javascript">
-    var webSocket;
-    var messages = document.getElementById("messages");
-    function openSocket()
-    {
-        // Create a new instance of the websocket
-        webSocket = new WebSocket("ws://localhost:8080/SnapChaty/createSesion");
-        /**
-         * Binds functions to the listeners for the websocket.
-         */
-        webSocket.onopen = function (event)
-        {
-            // For reasons I can't determine, onopen gets called twice
-            // and the first time event.data is undefined.
-            // Leave a comment if you know the answer.
-            if (event.data === undefined)
-                return;
-            writeResponse(event.data);
-        };
-        webSocket.onmessage = function (event)
-        {
-            writeResponse(event.data);
-        };
-        webSocket.onclose = function (event)
-        {
-            writeResponse("Connection closed");
-        };
-    }
-    /**
-     * Sends the value of the text input to the server
-     */
-    function send()
-    {
-        var text = document.getElementById("messageinput").value;
-        webSocket.send(text);
-    }
-    function closeSocket()
-    {
-        webSocket.close();
-    }
-    function writeResponse(text)
-    {
-        messages.innerHTML += "<br/>" + text;
-    }
-</script>
+body {
+	font: 13px Helvetica, Arial;
+}
+
+#form {
+	background: #000;
+	padding: 3px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#messageinput {
+	border: 0;
+	padding: 10px;
+	width: 80%;
+	margin-right: .5%;
+}
+
+button {
+	width: 15%;
+	background: rgb(130, 224, 255);
+	border: none;
+	padding: 10px;
+	position: fixed;
+	bottom: 0
+}
+
+#Send {
+	left: 83%;
+	bottm: 2%
+}
+
+#Close {
+	left: 83%;
+	bottom: 10%
+}
+
+#Open {
+	left: 83%;
+	bottom: 20%
+}
+</style>
+</head>
+<body>
+	<div id="form">
+		<input type="text" id="messageinput" />
+
+	</div>
+	<div id="buttons">
+		<button type="button" id="Open" onclick="openSocket();">Open</button>
+		<button type="button" id="Close" onclick="closeSocket();">Close</button>
+		<button type="button" id="Send" onclick="send();">Send</button>
+	</div>
+	<!-- Server responses get written here -->
+	<div id="messages"></div>
+
+	<!-- Script to utilise the WebSocket -->
+	<script type="text/javascript">
+		var webSocket;
+		var messages = document.getElementById("messages");
+		function openSocket() {
+			// Create a new instance of the websocket
+			webSocket = new WebSocket(
+					"ws://localhost:8080/SnapChaty/createSesion");
+			/**
+			 * Binds functions to the listeners for the websocket.
+			 */
+			webSocket.onopen = function(event) {
+				// For reasons I can't determine, onopen gets called twice
+				// and the first time event.data is undefined.
+				// Leave a comment if you know the answer.
+				if (event.data === undefined)
+					return;
+				writeResponse(event.data);
+			};
+			webSocket.onmessage = function(event) {
+				writeResponse(event.data);
+			};
+			webSocket.onclose = function(event) {
+				writeResponse("Connection closed");
+			};
+		}
+		/**
+		 * Sends the value of the text input to the server
+		 */
+		function send() {
+			var text = document.getElementById("messageinput").value;
+			webSocket.send(text);
+		}
+		function closeSocket() {
+			webSocket.close();
+		}
+		function writeResponse(text) {
+			messages.innerHTML += "<br/>" + text;
+		}
+	</script>
 
 </body>
 </html>
- 
+

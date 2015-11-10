@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.snapchaty;
+package gr.teicm.toulou;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -14,35 +14,32 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 
 /**
  * REST Web Service
- * Endpoint gia tin lipsi location
+ *Endpoint gia elenxo login xristi
  * @author Τάνια
  */
-@Path("location")
-public class LocationResource {
+@Path("signin")
+public class SigninResource {
 
     @Context
     private UriInfo context;
-    @Context
-    Request request;
 
     /**
-     * Creates a new instance of LocationResource
+     * Creates a new instance of SigninResource
      */
-    public LocationResource() {
+    public SigninResource() {
     }
-   
-    /**
-     * @param location String se morfi Json {latitude:"32",longtitude:"32"}
-     */
+
+    /*
+    @param user Dexetai user se String se morfi
+    {username:"taniaG",password:"mypass"}
+    */
     @POST
     @Consumes("text/plain")
-    public void postLocation(String location) {
-        System.out.println("got in location " + location);
+    public String postUser(String user) {
+        System.out.println("signin");
+        return "";
     }
-    
 }
