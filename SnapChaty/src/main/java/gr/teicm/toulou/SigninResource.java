@@ -5,6 +5,13 @@
  */
 package gr.teicm.toulou;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.util.JSON;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -39,7 +46,28 @@ public class SigninResource {
     @POST
     @Consumes("text/plain")
     public String postUser(String user) {
-        System.out.println("signin");
-        return "";
+       System.out.println("signin");
+        DBObject dbObjectUser = (DBObject)JSON.parse(user);
+
+        MongoClient mongoClient = new MongoClient("localhost" , 27017);
+
+        DB db = mongoClient.getDB("snapchatydb");
+        DBCollection coll = db.getCollection("user");
+        
+        DBObject userObject = coll.findOne((DBObject) and(eq("username",dbObjectUser.get("username")),
+                                                   eq("password",dbObjectUser.get("password"))));
+        
+        if(userObject != null)
+        {
+            mongoClient = new MongoClient("localhost" , 27017);
+
+            db = mongoClient.getDB("snapchatydb");
+            coll = db.getCollection("signInHistory");
+            coll.insert(userObject);
+            
+           return "User exists"; 
+        }else{
+            return "User Does Not Exist";
+        }
     }
 }

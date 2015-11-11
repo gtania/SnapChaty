@@ -38,9 +38,10 @@ public class OnlinenowResource {
     @GET
     @Produces("text/plain")
     public String getText() {
-        //TODO return proper representation object
-        System.out.println("in get fucker");
-        return "";
+       System.out.println("in get ");
+        return "{users:[{username:\"Taniag\"}"
+                    + "{username:\"User32\"}"
+                    + "{username:\"SnapChatyLover\"}]}";
     }
 
     

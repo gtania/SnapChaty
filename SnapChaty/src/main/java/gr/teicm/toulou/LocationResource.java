@@ -5,6 +5,14 @@
  */
 package gr.teicm.toulou;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import static com.mongodb.client.model.Filters.eq;
+import com.mongodb.util.JSON;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -41,8 +49,27 @@ public class LocationResource {
      */
     @POST
     @Consumes("text/plain")
-    public void postLocation(String location) {
+    public String postLocation(String location) {
         System.out.println("got in location " + location);
+        
+        DBObject dbObjectLocation = (DBObject)JSON.parse(location);
+
+        MongoClient mongoClient = new MongoClient("localhost" , 27017);
+
+        DB db = mongoClient.getDB("snapchatydb");
+        DBCollection coll = db.getCollection("signInHistory");
+        
+        DBObject push =new BasicDBObject().append("latitude",dbObjectLocation.get("latitude"))
+                                          .append("longtitude",dbObjectLocation.get("longtitude"));
+    try{
+        coll.update((DBObject) eq("username",dbObjectLocation.get("username")),push);
+        
+        return "Got Location";
+      }catch(MongoException e){
+        System.out.println(e);
+        return "Database error";
+
+     }
     }
     
 }
