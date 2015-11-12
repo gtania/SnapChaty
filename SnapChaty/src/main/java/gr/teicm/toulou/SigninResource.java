@@ -5,6 +5,7 @@
  */
 package gr.teicm.toulou;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -21,6 +22,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import org.bson.Document;
 
 /**
  * REST Web Service
@@ -54,11 +56,15 @@ public class SigninResource {
         DB db = mongoClient.getDB("snapchatydb");
         DBCollection coll = db.getCollection("user");
         
-        DBObject userObject = coll.findOne((DBObject) and(eq("username",dbObjectUser.get("username")),
-                                                   eq("password",dbObjectUser.get("password"))));
+        System.out.println("Before query" + dbObjectUser.get("username"));
         
+        DBObject userObject = coll.findOne(new BasicDBObject("username",dbObjectUser.get("username")));
+        System.out.println("{username:\""+ dbObjectUser.get("username")+"\"}");
+        System.out.println("done query" + userObject);
         if(userObject != null)
         {
+                    System.out.println("found a USER");
+
             mongoClient = new MongoClient("localhost" , 27017);
 
             db = mongoClient.getDB("snapchatydb");
@@ -67,6 +73,8 @@ public class SigninResource {
             
            return "User exists"; 
         }else{
+            System.out.println("DID NOT found a USER");
+
             return "User Does Not Exist";
         }
     }
