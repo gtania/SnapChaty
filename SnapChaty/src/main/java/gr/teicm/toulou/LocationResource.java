@@ -45,7 +45,7 @@ public class LocationResource {
     }
    
     /**
-     * @param location String se morfi Json {latitude:"32",longtitude:"32"}
+     * @param location String se morfi Json {latitude:"32",longtitude:"32",username:"TaniaG"}
      */
     @POST
     @Consumes("text/plain")
@@ -62,7 +62,7 @@ public class LocationResource {
         DBObject push =new BasicDBObject().append("latitude",dbObjectLocation.get("latitude"))
                                           .append("longtitude",dbObjectLocation.get("longtitude"));
     try{
-        coll.update((DBObject) eq("username",dbObjectLocation.get("username")),push);
+        coll.update(new BasicDBObject("username",dbObjectLocation.get("username")),push);
         
         return "Got Location";
       }catch(MongoException e){
