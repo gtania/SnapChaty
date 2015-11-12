@@ -60,5 +60,15 @@ public class SigninResourceTest {
         assertEquals(expResult, result);
         
     }
+     @Test
+    public void testPostUserThatDoesNotExists() {
+        System.out.println("postUser");
+        String user = "{username:\"NonExostedUser\",pass:\"Apass\"}";
+        SigninResource instance = new SigninResource();
+        String expResult = "User Does Not Exist";
+        String result = instance.postUser(user);
+        assertEquals(expResult, result);
+        
+    }
     
 }
