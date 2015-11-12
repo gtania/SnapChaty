@@ -13,6 +13,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.util.JSON;
+import com.mongodb.util.JSONParseException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -42,25 +43,36 @@ public class SignupResource {
      */
     public SignupResource() {
     }
-
+/**
+ * Endpoint opou dexetai ton kainourio xristi kai ton bazei sti basi
+ * @param user {onoma:\"Tania\",epitheto:\"Giossi\",username:\"TaniaG\",pass:\"mypass\",email:\"tania.giossi@hotmail.com\"}
+ * @return 
+ */
     @POST
     @Consumes("text/plain")
     public String postUser(String user) {
         System.out.println(user);
-        Gson gson = new Gson();
-        DBObject dbObjectUser = (DBObject)JSON.parse(user);
-                System.out.println("parsed leei");
+        DBObject dbObjectUser;
+        try{
+                dbObjectUser = (DBObject)JSON.parse(user);
 
-        MongoClient mongoClient = new MongoClient("localhost" , 27017);
-        System.out.println("connected leei");
+               try {  
+                      MongoClient mongoClient = new MongoClient("localhost" , 27017);
+                      System.out.println("Connected");
 
-        DB db = mongoClient.getDB("snapchatydb");
-        System.out.println("fetched db leei");
-        DBCollection coll = (DBCollection) db.getCollection("user");
-        System.out.println("fetched collection leei");
-       
-        coll.insert(dbObjectUser);
-System.out.println("inserted leei");
-        return "";
+                      DB db = mongoClient.getDB("snapchatydb");
+                      DBCollection coll = (DBCollection) db.getCollection("user");
+
+                      coll.insert(dbObjectUser);
+                      return "User singed up";
+
+              } catch (Exception e) {
+
+                      return "Database error";  
+              }
+               
+        }catch(JSONParseException e){
+             return "Cannot parse input";
+        }
     }
 }
