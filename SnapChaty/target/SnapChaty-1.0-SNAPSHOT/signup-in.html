@@ -4,13 +4,173 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+
     <body>
-        <div>TODO write content</div>
+        <script
+                language="javascript"
+                type="text/javascript"
+                src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+        >
+
+            /**
+             *
+             */
+            function signUp() {
+                // First name as text.
+                var firstName = document.getElementById("firstNameInput").value;
+
+                // Last name as text.
+                var lastName = document.getElementById("lastNameInput").value;
+
+                // Username as text.
+                var userName = document.getElementById("userNameInput").value;
+
+                // Password as text.
+                var password = document.getElementById("passwordInput").value;
+
+                // E - mail as text.
+                var eMail = document.getElementById("eMailInput").value;
+
+                // First name validation.
+                var firstNameIsValid = validateFirstName(firstName);
+
+                // Last name validation.
+                var lastNameIsValid = validateLastName(lastName);
+
+                // Username validation.
+                var userNameIsValid = validateUserName(userName);
+
+                // Password validation.
+                var passwordIsValid = validatePassWord(password);
+
+                // E - Mail validation.
+                var eMailIsValid = validateEMail(eMail);
+
+                // Creates a JSON with all the user's fields if they are valid.
+                if (
+                        firstNameIsValid &&
+                        lastNameIsValid &&
+                        userNameIsValid &&
+                        passwordIsValid &&
+                        eMailIsValid
+                ) {
+                    var user = new User(firstName, lastName, userName, password, eMail);
+
+                    var userToJSONRegistration = new UserToJSONRegistration(user);
+
+                    userToJSONRegistration.registerToJSON();
+                } else {
+                    alert(
+                            "Warning!" + "\n" +
+                            "Invalid username or password." + "\n" +
+                            "Please make sure none of the above fields are not blank."
+                    );
+                }
+            }
+
+            /**
+             * Returns true if the the firstName parameter is valid.
+             *
+             * @param firstName - the firstName to validate.
+             * @returns {boolean}
+             */
+            function validateFirstName(firstName) {
+                if (firstName.isEqual(null)) {
+                    return false;
+                } else if (firstName.isEqual("")) {
+                    return false;
+                } // TODO: Add other important rules here using else if (...).
+
+                return true;
+            }
+
+            /**
+             * Returns true if the the lastName parameter is valid.
+             *
+             * @param lastName - the lastName to validate.
+             * @returns {boolean}
+             */
+            function validateLastName(lastName) {
+                if (lastName.isEqual(null)) {
+                    return false;
+                } else if (lastName.isEqual("")) {
+                    return false;
+                } // TODO: Add other important rules here using else if (...).
+
+                return true;
+            }
+
+            /**
+             * Returns true if the the userName parameter is valid.
+             *
+             * @param userName - the userName to validate.
+             * @returns {boolean}
+             */
+            function validateUserName(userName) {
+                if (userName.isEqual(null)) {
+                    return false;
+                } else if (userName.isEqual("")) {
+                    return false;
+                } // TODO: Add other important rules here using else if (...).
+
+                return true;
+            }
+
+            /**
+             * Returns true if the password parameter is valid.
+             *
+             * @param password - the password to validate.
+             * @returns {boolean}
+             */
+            function validatePassWord(password) {
+                if (password.isEqual(null)) {
+                    return false;
+                } else if (password.isEqual("")) {
+                    return false;
+                } // TODO: Add other important rules here using else if (...).
+
+                return true;
+            }
+
+            /**
+             * Returns true if the the eMail parameter is valid.
+             *
+             * @param eMail - the eMail to validate.
+             * @returns {boolean}
+             */
+            function validateEMail(eMail) {
+                if (eMail.isEqual(null)) {
+                    return false;
+                } else if (eMail.isEqual("")) {
+                    return false;
+                } // TODO: Add other important rules here using else if (...).
+
+                return true;
+            }
+        </script>
+
+        <p>
+        <form>
+            First name: <input type="text" id="firstNameInput" /> <br/>
+            <br/>
+            Last name: <input type="text" id="lastNameInput" /> <br/>
+            <br/>
+            Username: <input type="text" id="userNameInput" /> <br/>
+            <br/>
+            Password: <input type="text" id="passwordInput" /> <br/>
+            <br/>
+            E - Mail: <input type="text" id="eMailInput" /> <br/>
+            <br/>
+            <button type="button" id="SignIn" onclick="signIn();">Sign In</button>
+            <button type="button" id="SignUp" onclick="signUp();">Sign Up</button>
+        </form>
+        </p>
     </body>
+
 </html>
